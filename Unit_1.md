@@ -365,11 +365,7 @@ If a table `Student` has 3 rows today, that is the current instance. If you add 
 
 ### ✨ In Summary:
 
-A **database system** allows data to be stored and accessed efficiently using a structured **architecture**. This structure includes different levels of views for users and administrators. Data is organized using a **data model**, designed by a **schema**, and filled with real-time **instances** (data values). All of these elements work together to keep the system flexible, efficient, and user-friendly.
-
-Of course! Here's a **complete, easy-to-understand explanation** of the following database topics in a **learnable, student-friendly format** with clear definitions and bullet points:
-
----
+## A **database system** allows data to be stored and accessed efficiently using a structured **architecture**. This structure includes different levels of views for users and administrators. Data is organized using a **data model**, designed by a **schema**, and filled with real-time **instances** (data values). All of these elements work together to keep the system flexible, efficient, and user-friendly.
 
 ## 📘 **Data Definition Language (DDL)**
 
