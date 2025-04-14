@@ -1,5 +1,3 @@
-## ✅ **Overview**
-
 ### 1. **Data**
 
 **Definition:**  
@@ -727,3 +725,86 @@ The **degree of a relationship** refers to the **number of entities involved** i
 | **Relationship**     | Connection between two or more entities.       | A Student is enrolled in a Class.                                             |
 | **Relationship Set** | Collection of similar relationships.           | All "enrolled in" connections for students.                                   |
 | **Degree**           | Number of entities involved in a relationship. | Binary: Student enrolled in Class; Ternary: Teacher teaches Subject to Class. |
+
+## 🔗 **Mapping and Cardinality**
+
+### ✅ **What is Mapping?**
+
+**Mapping** in DBMS refers to the **association or connection** between two entities in a relationship. It defines **how entities are related** and how many instances of one entity are associated with instances of another entity.
+
+### 🏫 **Example (School System):**
+
+- A **Student** is **enrolled in** a **Class**.
+- Mapping defines how many students can be in a class and how many classes a student can enroll in.
+
+---
+
+### ✅ **What is Cardinality?**
+
+**Cardinality** specifies the **number of instances** of one entity that can or must be associated with instances of another entity in a relationship.
+
+### 🏫 **Example:**
+
+- A **Teacher** can teach **many Subjects**.
+- A **Subject** can be taught by **one Teacher**.
+
+---
+
+## 🔢 **Types of Cardinality**
+
+Cardinality is classified into three main types:
+
+### 1. **One-to-One (1:1)**
+
+- **Definition:** One instance of an entity is related to **exactly one instance** of another entity.
+- **Example:**
+  - A **Principal** manages **one School**, and that **School** has only one **Principal**.
+- **Representation:**
+
+  - `Principal <-> School`
+
+  - `Principal 1 - 1 School`
+
+---
+
+### 2. **One-to-Many (1:N)**
+
+- **Definition:** One instance of an entity is related to **many instances** of another entity.
+- **Example:**
+  - A **Teacher** teaches **many Students**, but each **Student** is taught by only one **Teacher**.
+- **Representation:**
+
+  - `Teacher <- Students`
+
+  - `Teacher 1 - M Students`
+
+---
+
+### 3. **Many-to-Many (M:N)**
+
+- **Definition:** Many instances of one entity are related to **many instances** of another entity.
+- **Example:**
+  - **Students** can enroll in **many Courses**, and each **Course** can have **many Students**.
+- **Representation:**
+
+  - `Students - Courses`
+
+  - `Students N - M Courses`
+
+---
+
+## 🎯 **Summary Table**
+
+| **Cardinality Type**   | **Definition**                               | **Example (School System)**                      |
+| ---------------------- | -------------------------------------------- | ------------------------------------------------ |
+| **One-to-One (1:1)**   | One entity instance relates to one other.    | A Principal manages one School.                  |
+| **One-to-Many (1:N)**  | One entity instance relates to many others.  | A Teacher teaches many Students.                 |
+| **Many-to-Many (M:N)** | Many entity instances relate to many others. | Students enroll in many Courses, and vice versa. |
+
+---
+
+### ✨ **Why is Cardinality Important?**
+
+- Helps in **designing relationships** between entities.
+- Ensures **data consistency** and avoids redundancy.
+- Makes it easier to understand **real-world connections** in the database.
