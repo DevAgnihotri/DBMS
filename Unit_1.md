@@ -669,4 +669,61 @@ Attributes can be classified into the following types:
 | **Stored Attribute**        | Physically stored in the database.     | Date of Birth                                                  |
 | **Derived Attribute**       | Calculated from other attributes.      | Age (calculated from Date of Birth), Total Marks               |
 
+## 🧩 **Relationship in DBMS**
+
+### ✅ **Definition:**
+
+A **relationship** in DBMS is a **connection or association** between two or more entities. It shows how entities are related to each other in the real world.
+
+### 🏫 **Example (School System):**
+
+- A **Student** is **enrolled in** a **Class**.
+- A **Teacher** **teaches** a **Subject**.
+
+Here, "enrolled in" and "teaches" are relationships between entities.
+
 ---
+
+## 👥 **Relationship Set**
+
+### ✅ **Definition:**
+
+A **relationship set** is a **collection of similar relationships** between entities in a database.
+
+### 🏫 **Example:**
+
+- If 30 students are enrolled in Class 10, then all these "enrolled in" connections form a **relationship set**.
+- If 5 teachers teach different subjects, all these "teaches" connections form another **relationship set**.
+
+---
+
+## 🔢 **Degree of Relationship**
+
+### ✅ **Definition:**
+
+The **degree of a relationship** refers to the **number of entities involved** in the relationship.
+
+### 🏫 **Types of Relationships:**
+
+1. **Binary Relationship (Degree 2):**
+
+   - A relationship between two entities.
+   - **Example:** A **Student** is **enrolled in** a **Class**.
+
+2. **Ternary Relationship (Degree 3):**
+
+   - A relationship between three entities.
+   - **Example:** A **Teacher** teaches a **Subject** to a **Class**.
+
+3. **N-relationship**
+   - A relationship betwenn N entities
+
+---
+
+## 🎯 **Summary Table**
+
+| **Concept**          | **Definition**                                 | **Example (School System)**                                                   |
+| -------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Relationship**     | Connection between two or more entities.       | A Student is enrolled in a Class.                                             |
+| **Relationship Set** | Collection of similar relationships.           | All "enrolled in" connections for students.                                   |
+| **Degree**           | Number of entities involved in a relationship. | Binary: Student enrolled in Class; Ternary: Teacher teaches Subject to Class. |
