@@ -165,6 +165,8 @@ A **Library Management System** used in schools or small organizations is a clas
 - Supports multiple users.
 - Security and data integrity handled by the server.
 
+## ![2-Tier Architecture](https://media.geeksforgeeks.org/wp-content/uploads/20250108093805302915/2_tier.webp)
+
 ---
 
 ### 3. **3-Tier Architecture (Most Common in Real Applications)**
