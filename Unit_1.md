@@ -537,7 +537,7 @@ Absolutely, Dev! Let’s properly define everything with clarity, structure, and
 
 ---
 
-##### **\*\***
+##### **Important\***
 
 ## 🧠 **1. Entity **
 
@@ -648,6 +648,8 @@ For the entity **Student**, the attributes could be:
 ## 🔄 **Types of Attributes**
 
 Attributes can be classified into the following types:
+
+##### **Important\***
 
 ### 1. **Simple vs Composite Attributes**
 
