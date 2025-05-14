@@ -108,7 +108,6 @@ There are three main types of architecture:
 ### 1. **1-Tier Architecture (Single Tier)**
 
 - In 1-Tier Architecture the database is directly available to the user, the user can directly sit on the DBMS and use it that is, the client, server, and Database are all present on the same machine. This setup is simple and is often used in personal or standalone applications where the user interacts directly with the database.
-  .
 - Best for **personal or small-scale applications**.
 
 **Example:**  
@@ -120,17 +119,45 @@ MS Access on a personal computer.
 - No network involved.
 - Not suitable for multiple users.
 
----
+## ![1-Tier Architecture](https://media.geeksforgeeks.org/wp-content/uploads/20230509110722/DBMS-1-Tier-Architecture-660.webp)
+
+### Advantages of 1-Tier Architecture
+
+1-Tier Architecture offers several benefits, making it suitable for small-scale applications. Below are its key advantages:
+
+- **Simple Architecture:**  
+  It is the simplest architecture to set up, as it requires only a single machine to maintain.
+
+- **Cost-Effective:**  
+  No additional hardware is needed for implementation, making it a budget-friendly option.
+
+- **Easy to Implement:**  
+  Deployment is straightforward, which is why it is commonly used in small projects.
 
 ### 2. **2-Tier Architecture (Client-Server)**
 
-- Divides the system into **two layers**:
-  - **Client:** Where users interact (frontend).
-  - **Server:** Where database is stored and managed (backend).
-- The application sends requests to the database server and gets responses.
+The **2-tier architecture** is a basic client-server model where the application at the client end directly communicates with the database on the server side. The server side is responsible for providing **query processing** and **transaction management** functionalities, while the client side runs the **user interfaces** and **application programs**. The client application establishes a connection with the server to interact with the DBMS.
 
-**Example:**  
-Banking software where the bank clerk enters customer data on a client system, and it’s saved on a central server.
+---
+
+#### **Example: Library Management System**
+
+A **Library Management System** used in schools or small organizations is a classic example of two-tier architecture.
+
+1. **Client Layer (Tier 1):**
+
+- This is the **user interface** that library staff or users interact with. (Frontend)
+- For example, they might use a desktop application to:
+  - Search for books.
+  - Issue books.
+  - Check due dates.
+
+2. **Database Layer (Tier 2):**
+
+- The **database server** stores all the library records, such as: (Backend)
+  - Book details.
+  - User information.
+  - Transaction logs.
 
 **Features:**
 
