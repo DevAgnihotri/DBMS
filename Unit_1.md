@@ -362,6 +362,8 @@ A project management system where:
 
 ---
 
+##### **\*\***
+
 ### 3. **Relational Data Model** (Most popular)
 
 - Data is stored in **tables (called relations)**.
@@ -534,6 +536,8 @@ The **Overall Database Structure** refers to the way the **database is organized
 Absolutely, Dev! Let’s properly define everything with clarity, structure, and examples from a **school system**. This will cover all important points related to **Entity**, **Entity Set**, **Logical Entity**, and **Physical Entity** in **DBMS**.
 
 ---
+
+##### **\*\***
 
 ## 🧠 **1. Entity **
 
