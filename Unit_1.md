@@ -226,6 +226,8 @@ In **3-Tier Architecture**, there is an additional layer between the client and 
 
 ---
 
+#### Important
+
 ## 🧠 **Three-Level Architecture (As per DBMS Concept)**
 
 Apart from 1-tier, 2-tier, and 3-tier models, DBMS also follows a special **Three-Level Architecture** designed by ANSI/SPARC. It separates data into three views:
