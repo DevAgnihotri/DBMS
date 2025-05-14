@@ -107,7 +107,8 @@ There are three main types of architecture:
 
 ### 1. **1-Tier Architecture (Single Tier)**
 
-- Everything happens on a single device (user, application, and database are on the same machine).
+- In 1-Tier Architecture the database is directly available to the user, the user can directly sit on the DBMS and use it that is, the client, server, and Database are all present on the same machine. This setup is simple and is often used in personal or standalone applications where the user interacts directly with the database.
+  .
 - Best for **personal or small-scale applications**.
 
 **Example:**  
