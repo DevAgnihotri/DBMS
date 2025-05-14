@@ -338,3 +338,27 @@ Databases can be classified into various types based on their structure, functio
 | Multimedia Databases      | Store multimedia content                     | Oracle Multimedia     | Media streaming, digital libraries |
 
 Understanding these database types helps in selecting the right database for specific application requirements.
+
+## DBMS vs File System
+
+### Basic Definitions:
+
+- **DBMS (Database Management System)**: A software system that enables users to define, create, maintain, and control access to a database. It provides a systematic way to manage data with features like data integrity, security, and concurrency control.
+- **File System**: A method of storing and organizing files on a storage medium, such as a hard drive. It lacks advanced features like data integrity, relationships, and query processing.
+
+### Comparison Table:
+
+| Aspect                  | DBMS                                                                      | File System                                                         |
+| ----------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **Definition**          | Software for managing databases with structured data.                     | System for storing and retrieving files on storage devices.         |
+| **Data Organization**   | Data is organized in tables with relationships.                           | Data is stored in files without inherent relationships.             |
+| **Data Redundancy**     | Minimizes redundancy through normalization.                               | High redundancy due to lack of central control.                     |
+| **Data Integrity**      | Ensures data accuracy and consistency through constraints.                | No built-in mechanisms for ensuring data integrity.                 |
+| **Concurrency Control** | Supports multiple users accessing data simultaneously.                    | Limited or no concurrency control.                                  |
+| **Security**            | Provides robust security features like authentication and access control. | Basic file-level security, often dependent on the operating system. |
+| **Query Processing**    | Allows complex queries using languages like SQL.                          | No query processing; data retrieval is manual or programmatic.      |
+| **Backup and Recovery** | Automated backup and recovery mechanisms.                                 | Manual backup and recovery processes.                               |
+| **Scalability**         | Highly scalable for large datasets and multiple users.                    | Limited scalability for large datasets.                             |
+| **Examples**            | MySQL, PostgreSQL, Oracle DB.                                             | NTFS, FAT32, ext4.                                                  |
+
+DBMS provides a more structured, secure, and efficient way to manage data compared to traditional file systems.
