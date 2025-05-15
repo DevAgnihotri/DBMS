@@ -238,6 +238,63 @@ A relation is in **BCNF** if:
 
 By applying these normal forms, databases become more efficient, consistent, and easier to maintain.
 
+## Multivalued Dependency (MVD)
+
+A **multivalued dependency (MVD)** is a type of database constraint that occurs when one attribute in a relation uniquely determines a set of values for another attribute, independent of all other attributes. It represents a situation where two attributes are independent of each other but are both dependent on a third attribute.
+
+### Definition:
+
+For a relation `R`, a multivalued dependency `X ↠ Y` exists if, for every pair of tuples in `R` that agree on `X`, their values for `Y` can be swapped to produce new valid tuples, while keeping the rest of the attributes unchanged.
+
+### Example:
+
+Consider a relation `R(StudentID, Course, Hobby)`:
+
+| StudentID | Course  | Hobby    |
+| --------- | ------- | -------- |
+| 1         | Math    | Painting |
+| 1         | Science | Painting |
+| 1         | Math    | Reading  |
+| 1         | Science | Reading  |
+
+Here:
+
+- `StudentID ↠ Course`: A student can take multiple courses.
+- `StudentID ↠ Hobby`: A student can have multiple hobbies.
+
+The courses and hobbies are independent of each other but are both dependent on `StudentID`. This is a multivalued dependency.
+
+### Properties of MVD:
+
+1. If `X → Y`, then `X ↠ Y` (every functional dependency is also a multivalued dependency).
+2. MVDs are used to identify relations that are not in **Fourth Normal Form (4NF)**.
+
+### Resolving MVDs:
+
+To eliminate multivalued dependencies and achieve 4NF, decompose the relation into smaller relations such that each relation contains only one multivalued dependency.
+
+#### Decomposition Example:
+
+Given the relation `R(StudentID, Course, Hobby)`:
+
+1. Decompose into two relations:
+
+- `R1(StudentID, Course)`
+- `R2(StudentID, Hobby)`
+
+2. The resulting relations are in 4NF, as they no longer have multivalued dependencies.
+
+---
+
+### Summary:
+
+| Dependency Type        | Description                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| Functional Dependency  | One attribute uniquely determines another.                                   |
+| Multivalued Dependency | One attribute determines a set of values for another, independent of others. |
+
+By resolving MVDs, we ensure the database is free from redundancy and anomalies, improving its efficiency and consistency.
+
 ## Inclusion Dependence
 
 **Inclusion Dependence** is a constraint in relational databases that ensures a relationship between two relations by requiring that certain values in one relation must also appear in another. It is often used to enforce referential integrity.
