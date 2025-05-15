@@ -485,3 +485,58 @@ Operating systems like **Linux**, **Windows NT**, and early versions of **UNIX**
 #### Analogy:
 
 Think of a monolithic kernel as a single, large factory where all departments (e.g., production, packaging, shipping) work in the same building without walls separating them. While this setup allows for quick communication, a problem in one department can disrupt the entire factory.
+
+## System Calls and Application Programming Interface (API)
+
+### Purpose
+
+**System calls** and **APIs** are the ways programs interact with the operating system. They act as a bridge between user applications and the OS, allowing programs to request services like reading files, creating processes, or communicating with devices. Without system calls, applications would not be able to use hardware or manage resources safely and efficiently.
+
+- **System Calls:** Special functions provided by the OS that let programs ask the OS to perform tasks on their behalf.
+- **APIs:** Sets of functions and protocols that make it easier for programmers to use system calls without dealing with low-level details.
+
+### Five Common System Calls
+
+#### 1. `fork()`
+
+- **Purpose:** Creates a new process by duplicating the current process.
+- **Simple Explanation:** It's like making a copy of a running program so both can work independently.
+- **Example Use:** When you open a new tab in a terminal, the OS uses `fork()` to create a new shell process.
+
+#### 2. `exec()`
+
+- **Purpose:** Replaces the current process with a new program.
+- **Simple Explanation:** Think of it as switching the program running in a process without changing the process itself.
+- **Example Use:** After `fork()`, a child process often uses `exec()` to run a different program.
+
+#### 3. `wait()`
+
+- **Purpose:** Makes a process pause until one of its child processes finishes.
+- **Simple Explanation:** Like a parent waiting for its child to finish a task before continuing.
+- **Example Use:** A shell waits for a command to finish before showing the prompt again.
+
+#### 4. `open()`
+
+- **Purpose:** Opens a file so it can be read or written.
+- **Simple Explanation:** Tells the OS you want to use a file, and the OS gives you a handle to work with it.
+- **Example Use:** When you open a document in an editor, the program uses `open()` to access the file.
+
+#### 5. `read()` and `write()`
+
+- **Purpose:** `read()` gets data from a file, and `write()` puts data into a file.
+- **Simple Explanation:** Like reading from or writing to a notebook.
+- **Example Use:** When saving a file, the editor uses `write()`; when loading, it uses `read()`.
+
+---
+
+**Summary Table:**
+
+| System Call        | Category           | What It Does (Simple)                     |
+| ------------------ | ------------------ | ----------------------------------------- |
+| `fork()`           | Process Management | Makes a copy of a running program         |
+| `exec()`           | Process Management | Runs a new program in the current process |
+| `wait()`           | Process Management | Waits for a child process to finish       |
+| `open()`           | File Management    | Opens a file for reading or writing       |
+| `read()`/`write()` | File Management    | Reads from or writes to a file            |
+
+System calls make it possible for programs to use the power of the operating system in a safe and controlled way.
