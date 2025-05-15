@@ -362,3 +362,31 @@ Here is the OCR result of the table comparing **Hard Real-Time** and **Soft Real
 - When the kernel does have to be modified, the changes tend to be fewer, because the microkernel is a smaller kernel.
 
 - The **MINIX 3 microkernel**, for example, has only approximately **12,000 lines of code**. Developer **Andrew S. Tanenbaum**.
+
+![Micro-Kernel](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter2/2_14_microkernelArchitecture.jpg)
+
+---
+
+### Reentrant Kernels
+
+A **reentrant kernel** is a type of operating system kernel that allows multiple processes to share the same kernel code simultaneously. This is achieved by ensuring that the kernel code does not modify itself and uses separate data for each process.
+
+#### Key Features:
+
+1. **Code Sharing:** The kernel code is shared among processes, reducing memory usage.
+2. **Separate Data:** Each process has its own data, ensuring no interference between processes.
+3. **Concurrency:** Multiple processes can execute kernel functions at the same time without conflicts.
+
+#### Benefits:
+
+- **Efficiency:** Saves memory by sharing code.
+- **Scalability:** Supports multiple processes effectively.
+- **Stability:** Prevents processes from interfering with each other.
+
+#### Example:
+
+Modern operating systems like Linux and Windows use reentrant kernels to handle multitasking efficiently.
+
+#### Analogy:
+
+Think of a reentrant kernel as a library where multiple people can read the same book (code) at the same time, but each person uses their own notebook (data) to take notes.
