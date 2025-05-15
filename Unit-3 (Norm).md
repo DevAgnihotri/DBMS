@@ -90,7 +90,7 @@ Given:
 
 ---
 
-## Normal Forms in Database Design
+## Normal Forms in Database Design (Normalization)
 
 Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity. It involves dividing large tables into smaller ones and defining relationships between them. Normal forms are a series of guidelines to achieve this.
 
@@ -418,7 +418,7 @@ Sure! Let's break it down simply:
 
 ### What is Partial Functional Dependency?
 
-A **partial functional dependency** occurs in a relation when a non-prime attribute (an attribute that is not part of any candidate key) is functionally dependent on a part (proper subset) of a candidate key, rather than the whole candidate key.
+A **partial functional dependency** occurs in a relation when a non-prime attribute (an attribute that is not part of any candidate key) is functionally dependent on a part (proper subset) of a candidate key(i.e. Prime attribute), rather than the whole candidate key.
 
 **Example:**
 **Example:**
@@ -477,6 +477,116 @@ When a relation has partial dependencies, it can lead to several types of anomal
 | Insertion Anomaly | Cannot insert course info without a student enrolled                | Can't add new course unless a student is enrolled             |
 | Update Anomaly    | Must update course info in multiple rows; risk of inconsistency     | Instructor change must be updated for every student in course |
 | Deletion Anomaly  | Deleting last student in a course removes all info about the course | Lose course info if last student drops the course             |
+
+### What is Pseudo-Transitivity?
+
+**Pseudo-transitivity** is a property of functional dependencies that allows us to infer new dependencies when combining existing ones. It is an extension of the transitivity rule.
+
+#### Definition:
+
+If we have the following functional dependencies:
+
+1. `X → Y`
+2. `YW → Z`
+
+Then, by pseudo-transitivity, we can infer:
+
+- `XW → Z`
+
+#### Explanation:
+
+- `X → Y` means that `X` determines `Y`.
+- `YW → Z` means that the combination of `Y` and `W` determines `Z`.
+- Therefore, if `X` determines `Y` and `YW` determines `Z`, then `XW` (combining `X` and `W`) determines `Z`.
+
+#### Example:
+
+Consider a relation `R(A, B, C, D)` with the following functional dependencies:
+
+1. `A → B`
+2. `BC → D`
+
+Using pseudo-transitivity:
+
+- From `A → B` and `BC → D`, we can infer `AC → D`.
+
+#### Importance:
+
+Pseudo-transitivity is useful for reasoning about functional dependencies and simplifying the process of finding closures or verifying normalization.
+
+---
+
+### Summary:
+
+| Rule                | Description                             |
+| ------------------- | --------------------------------------- |
+| Transitivity        | If `X → Y` and `Y → Z`, then `X → Z`.   |
+| Pseudo-Transitivity | If `X → Y` and `YW → Z`, then `XW → Z`. |
+
+Pseudo-transitivity helps in deriving new functional dependencies, which is essential for database design and normalization.
+
+### What is Transitive Functional Dependency?
+
+A **transitive functional dependency** occurs when a non-prime attribute is functionally dependent on another non-prime attribute, which in turn is dependent on a candidate key. This creates an indirect dependency on the candidate key.
+
+**Example:**
+
+Consider a relation `R(A, B, C)` with the functional dependencies:
+
+- `A → B`
+- `B → C`
+
+Here, `C` is transitively dependent on `A` through `B`. This violates the rules of Third Normal Form (3NF).
+
+---
+
+### Anomalies Due to Transitive Dependency
+
+When a relation has transitive dependencies, it can lead to the following anomalies:
+
+#### 1. Insertion Anomaly
+
+- **Problem:** You cannot insert information about a dependent attribute(or can also be said as, an attribute) unless the related non-prime attribute is also known.
+- **Example:** In the relation `R(A, B, C)`, you cannot insert a value for `C` unless a corresponding value for `B` is also provided.
+
+#### 2. Update Anomaly
+
+- **Problem:** Updating a value for a non-prime attribute may require multiple rows to be updated, leading to inconsistency.
+- **Example:** If the value of `B` changes, you must update all rows where `B` determines `C`. Missing any row will result in inconsistent data.
+
+#### 3. Deletion Anomaly
+
+- **Problem:** Deleting a row may result in the loss of information about a dependent attribute.
+- **Example:** If you delete a row containing a specific value of `B`, you may lose all information about the corresponding value of `C`.
+
+---
+
+### Resolving Transitive Dependency
+
+To eliminate transitive dependencies, decompose the relation into smaller relations that satisfy 3NF. This ensures that non-prime attributes depend only on candidate keys.
+
+**Example Decomposition:**
+
+Given the relation `R(A, B, C)` with the dependencies `A → B` and `B → C`:
+
+1. Decompose into two relations:
+
+- `R1(A, B)` with `A → B`
+- `R2(B, C)` with `B → C`
+
+2. This eliminates the transitive dependency, as `C` now directly depends on `B` in `R2`.
+
+---
+
+### Summary Table
+
+| Anomaly Type      | Description                                                             | Example Scenario                                      |
+| ----------------- | ----------------------------------------------------------------------- | ----------------------------------------------------- |
+| Insertion Anomaly | Cannot insert dependent attribute without related non-prime attribute   | Can't insert `C` without `B`                          |
+| Update Anomaly    | Must update dependent attribute in multiple rows; risk of inconsistency | Changing `B` requires updating all rows where `B → C` |
+| Deletion Anomaly  | Deleting a row may remove information about dependent attributes        | Deleting `B` may lose all info about `C`              |
+
+By resolving transitive dependencies, the database becomes more consistent and easier to maintain.
 
 ---
 
