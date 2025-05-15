@@ -390,3 +390,31 @@ Modern operating systems like Linux and Windows use reentrant kernels to handle 
 #### Analogy:
 
 Think of a reentrant kernel as a library where multiple people can read the same book (code) at the same time, but each person uses their own notebook (data) to take notes.
+
+### Monolithic Kernel
+
+A **monolithic kernel** is a type of operating system architecture where the entire operating system, including the core services like process management, memory management, file system management, and device drivers, runs in a single address space in kernel mode.
+
+#### Key Features:
+
+1. **Single Address Space:** All components of the OS operate in the same memory space, which allows for faster communication between them.
+2. **High Performance:** Since there is no overhead of context switching between kernel components, monolithic kernels are generally faster.
+3. **Tightly Coupled Components:** All functionalities are integrated into one large block of code, making it less modular.
+
+#### Benefits:
+
+- **Efficiency:** Direct communication between components leads to better performance.
+- **Simplicity:** Easier to implement compared to microkernels.
+
+#### Drawbacks:
+
+- **Stability Issues:** A bug in one component can crash the entire system.
+- **Difficult Maintenance:** Modifying or updating one part of the kernel can affect the entire system.
+
+#### Example:
+
+Operating systems like **Linux**, **Windows NT**, and early versions of **UNIX** use monolithic kernels.
+
+#### Analogy:
+
+Think of a monolithic kernel as a single, large factory where all departments (e.g., production, packaging, shipping) work in the same building without walls separating them. While this setup allows for quick communication, a problem in one department can disrupt the entire factory.
