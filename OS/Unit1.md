@@ -28,6 +28,8 @@ With proper hardware support, operating systems can be broken into pieces. The o
 
 4. A system can be made modular in many ways. One method is the layered approach, in which the operating system is broken into a number of layers (levels). The bottom layer (layer 0) is the hardware; the highest (layer _N_) is the user interface.
 
+![Layered Approach](https://miro.medium.com/v2/resize:fit:1040/1*dGC4LbUB7I00LHgpYlyhVA.png)
+
 ---
 
 ## OS Services
@@ -348,3 +350,15 @@ Here is the OCR result of the table comparing **Hard Real-Time** and **Soft Real
 
 **Image:**
 ![Real-Time Operating System](https://www.founderjar.com/wp-content/uploads/2021/11/Real-Time-Operating-System.png)
+
+## Microkernel Systems
+
+- In the mid-1980s, researchers at Carnegie Mellon University developed an operating system called **Mach** that modularized the kernel using the **microkernel** approach.
+
+- This method structures the operating system by removing all nonessential components from the kernel and implementing them as system and **user-level programs**. The result is a small kernel.
+
+- One benefit of the microkernel approach is that it makes extending the operating system easier. All new services are added to user space and consequently do not require modification of the kernel.
+
+- When the kernel does have to be modified, the changes tend to be fewer, because the microkernel is a smaller kernel.
+
+- The **MINIX 3 microkernel**, for example, has only approximately **12,000 lines of code**. Developer **Andrew S. Tanenbaum**.
