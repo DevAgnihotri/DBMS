@@ -38,6 +38,7 @@ If X → Y and Y → Z, then X → Z.
 - **Union:** If X → Y and X → Z, then X → YZ.
 - **Decomposition:** If X → YZ, then X → Y and X → Z.
 - **Pseudo-Transitivity:** If X → Y and YZ → W, then XZ → W.
+- **Composition Rule** If X → Y and B → Z, then XB → YZ.
 
 ---
 
@@ -88,3 +89,148 @@ Given:
 **Therefore, AD → F is a valid functional dependency in R.**
 
 ---
+
+## Normal Forms in Database Design
+
+Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity. It involves dividing large tables into smaller ones and defining relationships between them. Normal forms are a series of guidelines to achieve this.
+
+### 1. **First Normal Form (1NF)**
+
+A relation is in **1NF** if:
+
+- All attributes contain only atomic (indivisible) values.
+- Each column contains values of a single type.
+- Each row is unique, identified by a primary key.
+
+**Example:**
+
+| StudentID | Name  | Subjects         |
+| --------- | ----- | ---------------- |
+| 1         | Alice | Math, Science    |
+| 2         | Bob   | English, History |
+
+**Problem:** The `Subjects` column contains multiple values, violating 1NF.
+
+**Solution (1NF):**
+
+| StudentID | Name  | Subject |
+| --------- | ----- | ------- |
+| 1         | Alice | Math    |
+| 1         | Alice | Science |
+| 2         | Bob   | English |
+| 2         | Bob   | History |
+
+---
+
+### 2. **Second Normal Form (2NF)**
+
+A relation is in **2NF** if:
+
+- It is in 1NF.
+- All non-prime attributes are fully functionally dependent on the primary key (no partial dependency).
+
+**Example:**
+
+| OrderID | ProductID | ProductName | Quantity |
+| ------- | --------- | ----------- | -------- |
+| 1       | 101       | Pen         | 10       |
+| 1       | 102       | Notebook    | 5        |
+
+**Problem:** `ProductName` depends only on `ProductID`, not the full composite key (`OrderID, ProductID`).
+
+**Solution (2NF):**
+
+**Orders Table:**
+
+| OrderID | ProductID | Quantity |
+| ------- | --------- | -------- |
+| 1       | 101       | 10       |
+| 1       | 102       | 5        |
+
+**Products Table:**
+
+| ProductID | ProductName |
+| --------- | ----------- |
+| 101       | Pen         |
+| 102       | Notebook    |
+
+---
+
+### 3. **Third Normal Form (3NF)**
+
+A relation is in **3NF** if:
+
+- It is in 2NF.
+- There are no transitive dependencies (non-prime attributes depend only on the primary key).
+
+**Example:**
+
+| EmployeeID | DepartmentID | DepartmentName |
+| ---------- | ------------ | -------------- |
+| 1          | 10           | HR             |
+| 2          | 20           | IT             |
+
+**Problem:** `DepartmentName` depends on `DepartmentID`, not directly on `EmployeeID`.
+
+**Solution (3NF):**
+
+**Employees Table:**
+
+| EmployeeID | DepartmentID |
+| ---------- | ------------ |
+| 1          | 10           |
+| 2          | 20           |
+
+**Departments Table:**
+
+| DepartmentID | DepartmentName |
+| ------------ | -------------- |
+| 10           | HR             |
+| 20           | IT             |
+
+---
+
+### 4. **Boyce-Codd Normal Form (BCNF)**
+
+A relation is in **BCNF** if:
+
+- It is in 3NF.
+- Every determinant is a candidate key.
+
+**Example:**
+
+| StudentID | CourseID | Instructor |
+| --------- | -------- | ---------- |
+| 1         | C101     | Prof. A    |
+| 2         | C102     | Prof. B    |
+
+**Problem:** `Instructor` depends on `CourseID`, not `StudentID`.
+
+**Solution (BCNF):**
+
+**Enrollments Table:**
+
+| StudentID | CourseID |
+| --------- | -------- |
+| 1         | C101     |
+| 2         | C102     |
+
+**Courses Table:**
+
+| CourseID | Instructor |
+| -------- | ---------- |
+| C101     | Prof. A    |
+| C102     | Prof. B    |
+
+---
+
+### Summary of Normal Forms
+
+| Normal Form | Key Requirement                                                                 |
+| ----------- | ------------------------------------------------------------------------------- |
+| 1NF         | Atomic values in attributes, unique rows.                                       |
+| 2NF         | No partial dependency (non-prime attributes depend on the whole primary key).   |
+| 3NF         | No transitive dependency (non-prime attributes depend only on the primary key). |
+| BCNF        | Every determinant is a candidate key.                                           |
+
+By applying these normal forms, databases become more efficient, consistent, and easier to maintain.
