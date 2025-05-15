@@ -351,7 +351,7 @@ Understanding these database types helps in selecting the right database for spe
 | Aspect                  | DBMS                                                                      | File System                                                         |
 | ----------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | **Definition**          | Software for managing databases with structured data.                     | System for storing and retrieving files on storage devices.         |
-| **Data Organization**   | Data is organized in tables with relationships.                           | Data is stored in files without inherent relationships.             |
+| **Data Organization**   | Data is organized in tables with relationships.                           | Data is stored in files without relationships.                      |
 | **Data Redundancy**     | Minimizes redundancy through normalization.                               | High redundancy due to lack of central control.                     |
 | **Data Integrity**      | Ensures data accuracy and consistency through constraints.                | No built-in mechanisms for ensuring data integrity.                 |
 | **Concurrency Control** | Supports multiple users accessing data simultaneously.                    | Limited or no concurrency control.                                  |
