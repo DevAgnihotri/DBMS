@@ -479,3 +479,149 @@ When a relation has partial dependencies, it can lead to several types of anomal
 | Deletion Anomaly  | Deleting last student in a course removes all info about the course | Lose course info if last student drops the course             |
 
 ---
+
+## Dependency Preserving Decomposition
+
+A decomposition of a relation is said to be **dependency preserving** if all the functional dependencies in the original relation can be enforced by simply enforcing the functional dependencies in the decomposed relations, without the need to compute a join of the relations.
+
+### Why is Dependency Preservation Important?
+
+Dependency preservation ensures that the constraints (functional dependencies) of the original relation are not lost during decomposition. This is crucial for maintaining the integrity of the data.
+
+---
+
+### How to Check Dependency Preservation?
+
+To check if a decomposition is dependency preserving:
+
+1. **Decompose the Relation:** Decompose the original relation into smaller relations based on the functional dependencies.
+2. **Project FDs onto Decomposed Relations:** For each decomposed relation, find the functional dependencies that hold in that relation.
+3. **Combine Projected FDs:** Take the union of all the functional dependencies from the decomposed relations.
+4. **Compare with Original FDs:** Check if the closure of the combined functional dependencies is equal to the closure of the original functional dependencies. If they are equal, the decomposition is dependency preserving.
+
+---
+
+### Example
+
+#### Given:
+
+- Relation: `R(A, B, C, D)`
+- Functional Dependencies (FDs):
+  - `A → B`
+  - `B → C`
+  - `A → D`
+
+#### Decomposition:
+
+Decompose `R` into two relations:
+
+1. `R1(A, B, D)`
+2. `R2(B, C)`
+
+#### Step 1: Project FDs onto Decomposed Relations
+
+- For `R1(A, B, D)`:
+
+  - `A → B` (from the original FDs)
+  - `A → D` (from the original FDs)
+
+- For `R2(B, C)`:
+  - `B → C` (from the original FDs)
+
+#### Step 2: Combine Projected FDs
+
+Combine the FDs from `R1` and `R2`:
+
+- `A → B`
+- `A → D`
+- `B → C`
+
+#### Step 3: Compare with Original FDs
+
+The closure of the combined FDs (`A → B`, `A → D`, `B → C`) is the same as the closure of the original FDs (`A → B`, `B → C`, `A → D`). Therefore, the decomposition is **dependency preserving**.
+
+---
+
+### Key Points:
+
+- Dependency preservation ensures that all functional dependencies can be enforced without recombining the decomposed relations.
+- A decomposition that is not dependency preserving may require additional joins to enforce the original constraints, which can be inefficient.
+
+By ensuring dependency preservation, we maintain the integrity of the database while optimizing its structure.
+
+# Question 1
+
+## Checking 2NF for Relation R(P, Q, R, S, T)
+
+### Given:
+
+- Relation: `R(P, Q, R, S, T)`
+- Functional Dependencies (FDs):
+  - `PQ → R`
+  - `S → T`
+
+### Step 1: Identify Candidate Key(s)
+
+To determine if the relation is in 2NF, we first identify the candidate key(s).
+
+- From `PQ → R`, we know `PQ` determines `R`.
+- From `S → T`, we know `S` determines `T`.
+- To cover all attributes (`P, Q, R, S, T`), the candidate key is `{P, Q, S}`.
+
+### Step 2: Check for Partial Dependencies
+
+A relation is in 2NF if:
+
+1. It is in 1NF.
+2. There are no partial dependencies (i.e., no non-prime attribute is dependent on a proper subset of a candidate key).
+
+#### Prime Attributes:
+
+- Attributes that are part of any candidate key: `P, Q, S`.
+
+#### Non-Prime Attributes:
+
+- Attributes that are not part of any candidate key: `R, T`.
+
+#### Check Dependencies:
+
+- `PQ → R`: `R` is a non-prime attribute, and `PQ` is a proper subset of the candidate key `{P, Q, S}`. **This is a partial dependency.**
+- `S → T`: `T` is a non-prime attribute, and `S` is a proper subset of the candidate key `{P, Q, S}`. **This is a partial dependency.**
+
+### Conclusion:
+
+The relation `R(P, Q, R, S, T)` is **not in 2NF** because it has partial dependencies.
+
+---
+
+### Step 3: Convert to 2NF
+
+To convert the relation into 2NF, we remove the partial dependencies by decomposing the relation.
+
+#### Decomposition:
+
+1. Create a relation for each partial dependency:
+
+   - For `PQ → R`: Create `R1(P, Q, R)`.
+   - For `S → T`: Create `R2(S, T)`.
+
+2. Create a relation for the remaining attributes:
+   - `R3(P, Q, S)` (to ensure all candidate keys are preserved).
+
+#### Final Relations:
+
+- `R1(P, Q, R)` with FD: `PQ → R`
+- `R2(S, T)` with FD: `S → T`
+- `R3(P, Q, S)` (no FDs)
+
+---
+
+### Final 2NF Decomposition:
+
+The decomposed relations are:
+
+1. `R1(P, Q, R)`
+2. `R2(S, T)`
+3. `R3(P, Q, S)`
+
+These relations are now in 2NF, as there are no partial dependencies.
