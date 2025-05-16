@@ -168,15 +168,23 @@ This way, Peterson’s Algorithm makes sure only one process is in the critical 
 
 ## Dekker Algorithm (said and Done)
 
+---
+
 ## Semaphores
 
 Operating System Solution Using Semaphores
 
-1. Semaphores are synchronization tools used to solve the n-process problem.
+1. Semaphores are synchronization tools used to solve the n-process problem.(Peterson was a 2 process soln for bool vals)
 
-2. A semaphore `S` is a simple integer variable. After initialization, it can only be accessed using two standard atomic operations: `wait(S)` and `signal(S)`.
+2. A semaphore is like a counter that keeps track of how many resources are available.
 
-3. The `wait(S)` operation was originally called `P(S)`, and the `signal(S)` operation was originally called `V(S)`.
+3. It helps make sure that only a certain number of processes can use a resource at the same time.
+
+4. A **semaphore** is a tool used by operating systems to help processes share resources safely.
+
+5. A semaphore `S` is a simple integer variable. After initialization, it can only be accessed using two standard atomic operations: `wait(S)` and `signal(S)`.
+
+6. The `wait(S)` operation was originally called `P(S)`, and the `signal(S)` operation was originally called `V(S)`.
 
 ---
 
@@ -188,3 +196,42 @@ Operating System Solution Using Semaphores
 | S--;                         | }             |
 | }                            | ```           |
 | ```                          |               |
+
+### How Semaphores Work
+
+### Example: Semaphore with Two Processes
+
+Suppose we have two processes, **P1** and **P2**, and a semaphore `s` initialized to 1:
+
+1. **P1 wants to enter the critical section:**
+
+- P1 calls `wait(s)`. The value of `s` decreases from 1 to 0.
+- P1 enters the critical section.
+
+1. **P2 tries to enter the critical section while P1 is inside:**
+
+- P2 calls `wait(s)`. Since `s` is 0, P2 cannot proceed and must wait.
+
+1. **P1 exits the critical section:**
+
+- P1 calls `signal(s)`. The value of `s` increases from 0 to 1.
+
+1. **P2 can now enter:**
+
+- Since `s` is now 1, P2's `wait(s)` succeeds, and P2 enters the critical section.
+
+This ensures that only one process can be in the critical section at a time, maintaining mutual exclusion.
+
+#### Why Use Semaphores?
+
+- They help prevent problems like race conditions, where two or more processes try to change shared data at the same time.
+- Semaphores make sure that resources are shared safely and fairly among processes.
+
+#### Example
+
+- If there are 3 printers (resources), the semaphore starts at 3.
+- Each time a process wants to print, it does a wait (counter goes down).
+- When done, it does a signal (counter goes up).
+- If all printers are busy (counter is 0), new processes must wait.
+
+Semaphores are important for making sure multiple processes can work together without causing errors or conflicts.
