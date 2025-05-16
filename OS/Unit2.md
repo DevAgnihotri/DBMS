@@ -104,6 +104,7 @@ The critical section problem is about ensuring safe and correct access to shared
 
 - **Mutual Exclusion**:
   No two processes should be present inside the critical section at the same time, i.e. only one process is allowed in the critical section at an instant of time.
+  _Mutexes_ (short for mutual exclusion) are a synchronization mechanism used to control access to shared resources in concurrent programming, preventing race conditions and data corruption.
 
 - **Progress**:
   If no process is executing in its critical section and some processes wish to enter their critical sections, then only those processes that are not executing in their remainder sections can participate in deciding which will enter its critical section next (means other process will participate which actually wish to enter). There should be no deadlock.
@@ -208,15 +209,15 @@ Suppose we have two processes, **P1** and **P2**, and a semaphore `s` initialize
 - P1 calls `wait(s)`. The value of `s` decreases from 1 to 0.
 - P1 enters the critical section.
 
-1. **P2 tries to enter the critical section while P1 is inside:**
+2. **P2 tries to enter the critical section while P1 is inside:**
 
 - P2 calls `wait(s)`. Since `s` is 0, P2 cannot proceed and must wait.
 
-1. **P1 exits the critical section:**
+3. **P1 exits the critical section:**
 
 - P1 calls `signal(s)`. The value of `s` increases from 0 to 1.
 
-1. **P2 can now enter:**
+4. **P2 can now enter:**
 
 - Since `s` is now 1, P2's `wait(s)` succeeds, and P2 enters the critical section.
 
@@ -227,11 +228,279 @@ This ensures that only one process can be in the critical section at a time, mai
 - They help prevent problems like race conditions, where two or more processes try to change shared data at the same time.
 - Semaphores make sure that resources are shared safely and fairly among processes.
 
-#### Example
-
-- If there are 3 printers (resources), the semaphore starts at 3.
-- Each time a process wants to print, it does a wait (counter goes down).
-- When done, it does a signal (counter goes up).
-- If all printers are busy (counter is 0), new processes must wait.
-
 Semaphores are important for making sure multiple processes can work together without causing errors or conflicts.
+
+Here is the OCR (extracted) text from the image:
+
+---
+
+### Producer-Consumer Problem
+
+- **Problem Definition** – The Producer-Consumer problem involves two types of processes: the Producer and the Consumer. The Producer generates data and places it into a buffer with _n_ bllocks, while the Consumer removes and uses this data. Both the Producer and Consumer can add or remove only one item at a time.
+
+- The Producer must check if the buffer is full before adding a new item to avoid overflow.
+
+- Similarly, the Consumer must check if the buffer is empty before removing an item to avoid underflow.
+
+- The Producer and Consumer must be properly synchronized so that when one is accessing the buffer, the other waits, ensuring safe and consistent access to shared resources.
+
+#### Semaphores Used
+
+- **empty**: Counts the number of empty slots in the buffer as **E**
+- **full**: Counts the number of full slots in the buffer as **F**
+- **mutex**: Locks access to the buffer (mutual exclusion) as **S** (0,1)
+
+- **E = 0**, **F = n** (initial state)
+
+---
+
+| **Producer()**        | **Consumer()**           |
+| --------------------- | ------------------------ |
+| ```c                  | ```c                     |
+| {                     | {                        |
+| while(T)              | while(T)                 |
+| {                     | {                        |
+| // Produce an item    | wait(F); // Underflow    |
+| wait(E); // Overflow  | wait(S);                 |
+| wait(S);              | // Pick item from buffer |
+| // Add item to buffer | signal(S);               |
+| signal(S);            | signal(E);               |
+| signal(F);            | // Consume item          |
+| }                     | }                        |
+| }                     | }                        |
+| ```                   | ```                      |
+
+---
+
+### The Dining Philosophers Problem
+
+The **Dining Philosophers Problem** is a classic synchronization problem that illustrates the challenges of resource sharing and process synchronization.
+
+#### **Problem Definition**
+
+- There are **K philosophers** seated around a circular table. (K will be an Odd num.)
+- Between each pair of philosophers, there is **one chopstick** (so there are K chopsticks in total).
+- Each philosopher alternates between two activities:
+  - **Thinking**
+  - **Eating**
+- To eat, a philosopher needs to pick up **both** the chopsticks adjacent to them (the one on their left and the one on their right).
+- A chopstick can be held by **only one philosopher at a time**.
+- Philosophers must put down both chopsticks after eating so others can use them.
+
+#### **Key Points**
+
+- The problem demonstrates the need for proper synchronization to avoid issues such as **deadlock** (where no philosopher can eat) and **starvation** (where a philosopher never gets to eat).
+- It is used to model situations where multiple processes compete for limited shared resources.
+
+![Din Phy Problem](https://media.geeksforgeeks.org/wp-content/uploads/20231107114729/dining_philosopher_problem.png)
+
+```c
+void Philosopher(void)
+ while (true)
+   {  THINK();
+      wait(CHOPSTICK[i]);
+      wait(CHOPSTICK[i+1 mod 5]);
+      EAT();
+      signal(CHOPSTICK[i];)
+      signal(CHOPSTICK[i+1 mod 5]);
+   }
+```
+
+### Ways to Treat Deadlock in the Dining Philosophers Problem
+
+To treat **deadlock** in the **Dining Philosophers Problem** using **semaphores**, here are several effective strategies explained in **simple terms**:
+
+---
+
+### 🔁 1. **Allow at Most (N–1) Philosophers to Sit at Once**
+
+- **Idea**: If 5 philosophers are there, allow only **4 to try** picking up forks at the same time.
+- **Why it works**: This ensures **at least one philosopher can eat**, freeing forks for others later — preventing circular wait.
+- **How**: Use a semaphore `room` initialized to `N-1`. A philosopher must `wait(room)` before trying to pick up forks, and `signal(room)` after eating.
+
+### 🥢 1a. **Add an Extra Chopstick**
+
+- **Idea**: Place one more chopstick than the number of philosophers (i.e., 6 chopsticks for 5 philosophers).
+- **Why it works**: With more chopsticks than philosophers, at least one philosopher can always pick up two chopsticks and eat, breaking the deadlock cycle.
+- **How**: Simply provide an extra chopstick on the table. Philosophers pick up their two adjacent chopsticks as usual.
+
+---
+
+### 🔄 2. **Pick Up Both Forks Together (Atomic Operation)**
+
+- **Idea**: A philosopher only proceeds if **both left and right forks** are available.
+- **Why it works**: Prevents a philosopher from holding one fork and waiting forever for the other.
+- **How**: Use a critical section or single semaphore per philosopher that checks and locks both forks at once.
+
+---
+
+### 🔃 3. **Use Asymmetry in Fork Picking**
+
+- **Idea**: Change the order of picking forks for some philosophers.
+- **Why it works**: Avoids circular wait condition by breaking the pattern.
+- **How**: For example:
+
+  - Odd-numbered philosophers: pick **left**, then **right**
+  - Even-numbered philosophers: pick **right**, then **left**
+
+---
+
+### 🔐 4. **Use a Global Semaphore for Fork Access**
+
+- **Idea**: Introduce a single semaphore to limit how many philosophers can access forks at once.
+- **Why it works**: Helps control access to shared resources.
+- **How**: Set a semaphore `mutex` initialized to `1`, and wrap fork-picking logic inside a `wait(mutex)` and `signal(mutex)` block.
+
+---
+
+### 🛠️ 5. **Monitor with Additional States (Using Arrays)**
+
+- **Idea**: Track philosopher states: THINKING, HUNGRY, EATING.
+- **Why it works**: Only allow eating when neighbors are not eating.
+- **How**:
+
+  - Use semaphores per philosopher (`S[i]`)
+  - Use a `mutex` to control access to state checks
+  - Before eating, a philosopher checks neighbors’ states
+
+---
+
+### 🔚 Summary Table
+
+| Method           | Core Idea        | Prevents Deadlock by   |
+| ---------------- | ---------------- | ---------------------- |
+| N–1 Philosophers | Limit access     | Avoiding full lock     |
+| Atomic Fork Pick | All or none      | No partial holding     |
+| Asymmetry        | Fork order       | Breaking circular wait |
+| Global Semaphore | Critical section | Controlled entry       |
+| State Monitoring | Track status     | Conditional eating     |
+
+## Sleeping Barber Problem in Process Synchronization
+
+The **Sleeping Barber problem** is a classic example in process synchronization, used to show how to coordinate multiple processes (like customers and a barber) in a concurrent system.
+
+### Problem Definition
+
+- There is a barber shop with **one barber** and a certain number of **waiting chairs** for customers.
+- **Customers** arrive at random times:
+  - If there is an empty chair, the customer sits and waits.
+  - If all chairs are full, the customer leaves.
+- The **barber**:
+  - If there are no customers, the barber goes to sleep.
+  - When a customer arrives and the barber is sleeping, the customer wakes up the barber.
+  - The barber cuts hair for one customer at a time.
+  - After finishing, the barber checks for waiting customers. If there are any, he serves the next one; otherwise, he goes back to sleep.
+
+### Key Points
+
+- The problem demonstrates the need for **proper synchronization** to avoid issues like:
+  - **Deadlock**: Where the system gets stuck and no progress is made.
+  - **Starvation**: Where a customer never gets served.
+- The goal is to coordinate the actions of the barber and customers so that:
+  - No two customers get their hair cut at the same time.
+  - The barber does not cut hair when there are no customers.
+  - Customers are served in the order they arrive (FIFO).
+
+### Solution Using Semaphores
+
+To solve the Sleeping Barber problem, we use semaphores to synchronize the barber and customers:
+
+- **waiting**: Counts the number of customers waiting (initially 0).
+- **mutex**: Ensures mutual exclusion when updating the number of waiting customers.
+- **barber**: Signals the barber when a customer arrives.
+- **customer**: Signals a customer when the barber is ready.
+
+#### Pseudocode
+
+```c
+semaphore waiting = 0;    // Number of waiting customers
+semaphore mutex = 1;      // For mutual exclusion
+semaphore barber = 0;     // Barber is sleeping
+semaphore customer = 0;   // Customer is waiting
+
+Barber() {
+  while (true) {
+    wait(customer);       // Wait for a customer to arrive
+    wait(mutex);          // Enter critical section
+    waiting--;            // One less waiting customer
+    signal(barber);       // Barber is ready
+    signal(mutex);        // Exit critical section
+    // Cut hair
+  }
+}
+
+Customer() {
+  wait(mutex);            // Enter critical section
+  if (waiting < N) {      // If there is a free chair
+    waiting++;            // Increment waiting customers
+    signal(customer);     // Notify barber
+    signal(mutex);        // Exit critical section
+    wait(barber);         // Wait for barber to be ready
+    // Get hair cut
+  } else {
+    signal(mutex);        // Exit critical section
+    // Leave (no chair available)
+  }
+}
+```
+
+### Summary
+
+- The Sleeping Barber problem models real-world scenarios where resources (like a barber) must be shared among multiple users (customers) in a synchronized way.
+- It teaches how to use semaphores to avoid deadlock and starvation, ensuring fair and efficient service.
+- This problem is important for understanding process synchronization in operating systems.
+
+## Test-and-Set Operation (Hardware Solution for Mutual Exclusion)
+
+The **Test-and-Set** operation is a simple hardware-supported instruction used to solve the critical section problem and achieve mutual exclusion in multiprocessor systems.
+
+### What is Test-and-Set?
+
+- **Test-and-Set** is an **atomic** (indivisible) operation provided by hardware.
+- It checks the value of a variable (usually a lock), and **sets it to true** (locked) in a single, uninterruptible step.
+- The operation returns the old value of the variable.
+
+### How Does It Work?
+
+Suppose we have a shared variable `lock` initialized to `false` (unlocked):
+
+```c
+// Pseudocode for Test-and-Set
+boolean TestAndSet(boolean *lock) {
+  boolean old = *lock;
+  *lock = true;
+  return old;
+}
+```
+
+- When a process wants to enter the critical section, it repeatedly calls `TestAndSet(&lock)`.
+- If `TestAndSet` returns `false`, the process enters the critical section (it acquired the lock).
+- If it returns `true`, another process is already in the critical section, so it keeps trying (busy waiting).
+
+### Example Usage
+
+```c
+while (TestAndSet(&lock)) {
+  // Busy wait (spin)
+}
+// Critical section
+// ...
+lock = false; // Release lock
+```
+
+### Simple Explanation
+
+- Think of `Test-and-Set` as a special lock on a door.
+- When you try to open the door, you check if it’s locked and lock it at the same time.
+- If it was unlocked, you get in and lock it behind you.
+- If it was already locked, you wait and keep trying until it’s free.
+
+### Key Points
+
+- **Atomicity**: The operation cannot be interrupted, so no two processes can enter the critical section at the same time.
+- **Busy Waiting**: Processes may keep checking the lock in a loop (called "spinlock").
+- **Hardware Support**: Most modern CPUs provide this as a single instruction.
+
+### Summary
+
+Test-and-Set is a hardware-based solution for mutual exclusion. It is simple and effective for protecting critical sections, but can cause busy waiting if many processes compete for the lock.
