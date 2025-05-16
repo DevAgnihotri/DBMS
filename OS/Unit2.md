@@ -156,8 +156,8 @@ This table shows how both processes use the `flag` and `turn` variables to coord
 
 4. **Waiting Loop**: The process checks two things in a loop:
 
-- If the other process also wants to enter (`flag` of the other process is `true`),(i.e., `flag[1 - processID] == true`), and
-- If it is the other process’s turn (`turn` is set to the other process’s ID),(i.e., `turn == 1 - processID`)
+- If the other process also wants to enter (`flag` of the other process is `true`), and
+- If it is the other process’s turn (`turn` is set to the other process’s ID),
 - If both are true, the process waits. This lets the other process go first.
 
 5. **Entering the Critical Section**: When the loop ends, it means it is safe for the process to enter the critical section. Now, it can safely use the shared resource.
@@ -165,3 +165,26 @@ This table shows how both processes use the `flag` and `turn` variables to coord
 6. **Exiting the Critical Section**: After finishing, the process sets its `flag` back to `false`. This shows it no longer wants to enter, so the other process can now try to enter the critical section.
 
 This way, Peterson’s Algorithm makes sure only one process is in the critical section at a time, avoiding problems like race conditions.
+
+## Dekker Algorithm (said and Done)
+
+## Semaphores
+
+Operating System Solution Using Semaphores
+
+1. Semaphores are synchronization tools used to solve the n-process problem.
+
+2. A semaphore `S` is a simple integer variable. After initialization, it can only be accessed using two standard atomic operations: `wait(S)` and `signal(S)`.
+
+3. The `wait(S)` operation was originally called `P(S)`, and the `signal(S)` operation was originally called `V(S)`.
+
+---
+
+| **wait(S)**                  | **signal(S)** |
+| ---------------------------- | ------------- |
+| ```c                         | ```c          |
+| {                            | {             |
+| while (S <= 0); // Busy wait | S++;          |
+| S--;                         | }             |
+| }                            | ```           |
+| ```                          |               |
