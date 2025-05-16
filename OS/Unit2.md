@@ -140,16 +140,14 @@ Below is a side-by-side comparison of the Peterson's Algorithm code for processe
 
 | **Process Pi**                | **Process Pj**                |
 | ----------------------------- | ----------------------------- |
-| } while(true);                | } while(true);                |
-| // critical section           | // critical section           |
-| // remainder section          | // remainder section          |
-| `                             | `                             |
-| `c                            | `c                            |
 | do {                          | do {                          |
-| flag[i] = false;              | flag[j] = false;              |
 | flag[i] = true;               | flag[j] = true;               |
 | turn = j;                     | turn = i;                     |
 | while (flag[j] && turn == j); | while (flag[i] && turn == i); |
+| // critical section           | // critical section           |
+| flag[i] = false;              | flag[j] = false;              |
+| // remainder section          | // remainder section          |
+| } while(true);                | } while(true);                |
 
 This table shows how both processes use the `flag` and `turn` variables to coordinate entry into the critical section, ensuring mutual exclusion.
 
@@ -211,14 +209,10 @@ Operating System Solution Using Semaphores
 
 ---
 
-| **wait(S)**                  | **signal(S)** |
-| ---------------------------- | ------------- |
-| {                            | {             |
-| }                            | ```           |
-| ```                          |
-| `c                           | `c            |
-| S--;                         | }             |
-| while (S <= 0); // Busy wait | S++;          |
+| **wait(S)**                   | **signal(S)** |
+| ----------------------------- | ------------- |
+| `S--;`                        | `S++;`        |
+| `while (S < 0) ;// Busy wait` |               |
 
 ### How Semaphores Work
 
@@ -276,23 +270,22 @@ Here is the OCR (extracted) text from the image:
 
 ---
 
-| **Producer()**        | **Consumer()**           |
-| --------------------- | ------------------------ |
-| {                     | {                        |
-| {                     | {                        |
-| }                     | }                        |
-| }                     | }                        |
-| // Add item to buffer | signal(S);               |
-| // Produce an item    | wait(F); // Underflow    |
-| `                     | `                        |
-| `c                    | `c                       |
-| signal(F);            | // Consume item          |
-| signal(S);            | signal(E);               |
-| wait(E); // Overflow  | wait(S);                 |
-| wait(S);              | // Pick item from buffer |
-| while(T)              | while(T)                 |
+| **Producer()**                  | **Consumer()**                    |
+| ------------------------------- | --------------------------------- |
+| while (true) {                  | while (true) {                    |
+| wait(empty); // Wait if full    | wait(full); // Wait if empty      |
+| wait(mutex); // Enter critical  | wait(mutex); // Enter critical    |
+| // Add item to buffer           | // Remove item from buffer        |
+| signal(mutex); // Exit critical | signal(mutex); // Exit critical   |
+| signal(full); // Increment full | signal(empty); // Increment empty |
+| }                               | }                                 |
 
----
+**Legend:**
+
+- `empty`: Semaphore counting empty slots
+- `full`: Semaphore counting filled slots
+- `mutex`: Semaphore for mutual exclusion
+- Producer waits if buffer is full; Consumer waits if buffer is empty.
 
 ### The Dining Philosophers Problem
 
