@@ -145,3 +145,23 @@ Below is a side-by-side comparison of the Peterson's Algorithm code for processe
 | ```                           | ```                           |
 
 This table shows how both processes use the `flag` and `turn` variables to coordinate entry into the critical section, ensuring mutual exclusion.
+
+### Working of Peterson's Algorithm
+
+1. **Initial Setup**: At the start, both processes set their `flag` to `false`, meaning neither wants to enter the critical section. The `turn` variable is set to one of the process IDs (0 or 1), showing whose turn it is to enter.
+
+2. **Wanting to Enter**: When a process wants to enter the critical section, it sets its `flag` to `true` to show its intention.
+
+3. **Setting the Turn**: The process then sets the `turn` variable to the other process’s ID. This means it is giving the other process a chance to go first if it also wants to enter.
+
+4. **Waiting Loop**: The process checks two things in a loop:
+
+- If the other process also wants to enter (`flag` of the other process is `true`),(i.e., `flag[1 - processID] == true`), and
+- If it is the other process’s turn (`turn` is set to the other process’s ID),(i.e., `turn == 1 - processID`)
+- If both are true, the process waits. This lets the other process go first.
+
+5. **Entering the Critical Section**: When the loop ends, it means it is safe for the process to enter the critical section. Now, it can safely use the shared resource.
+
+6. **Exiting the Critical Section**: After finishing, the process sets its `flag` back to `false`. This shows it no longer wants to enter, so the other process can now try to enter the critical section.
+
+This way, Peterson’s Algorithm makes sure only one process is in the critical section at a time, avoiding problems like race conditions.
