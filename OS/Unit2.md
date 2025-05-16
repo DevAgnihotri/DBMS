@@ -1,3 +1,5 @@
+# Unit 2
+
 ### **Process and States of a Process**
 
 A process is simply a running program. It has its own memory, keeps track of what to do next, and uses resources like files and devices while it runs.
@@ -39,7 +41,7 @@ Suppose two processes, P1 and P2, both want to update a shared variable `counter
 
 Imagine a single-person restroom with a lock on the door. Only one person can use the restroom at a time. If someone is inside (critical section), others must wait outside (waiting state) until the restroom is free. The lock acts as a mechanism to enforce mutual exclusion, preventing multiple people from entering at once.
 
-**Process Synchronization & Race Condition**
+### Process Synchronization & Race Condition\*\*
 
 As we understand in a multiprogramming environment a good number of processes compete for limited number of resources. Concurrent access to shared data at some time may result in data inconsistency for e.g.
 
@@ -77,6 +79,27 @@ P()
 
 ---
 
+## **Critical Section**
+
+A **critical section** is a part of a program where a process accesses shared resources (like variables, files, or devices) that can also be used by other processes. To prevent problems like data corruption or inconsistent results, only one process should be allowed in the critical section at a time. This ensures that shared resources are used safely and correctly.
+
+### **Critical Section Problem**
+
+The **critical section problem** is about making sure that when multiple processes (or programs) need to use the same shared resource (like a variable or file), only one process can use it at a time. If two or more processes try to use or change the shared resource at the same time, it can cause errors or unexpected results. The goal is to design a way for processes to take turns safely, so the shared resource is always used correctly.
+
+**Goal:**
+Design a protocol or mechanism so that:
+
+- Only one process can be in its critical section at any given time (mutual exclusion).
+- No process is unnecessarily delayed (progress).
+- Every process gets a fair chance to enter its critical section (bounded waiting).
+
+**Example:**
+If two threads try to update the same bank account balance at the same time, without proper control, the final balance could be incorrect.
+
+**Summary:**
+The critical section problem is about ensuring safe and correct access to shared resources in concurrent systems.
+
 ### **Criterion to Solve Critical Section Problem**
 
 - **Mutual Exclusion**:
@@ -90,3 +113,35 @@ P()
 - **Bounded Waiting**:
   There exists a bound or a limit on the number of times a process is allowed to enter its critical section and no process should wait indefinitely to enter the CS.
 - - this one is optional criterion
+
+## Peterson's Algorithm in Process Synchronization
+
+Peterson's Algorithm is a classic solution to the critical section problem in process synchronization. It ensures mutual exclusion meaning only one process can access the critical section at a time and avoids race conditions. The algorithm uses two shared variables to manage the turn-taking mechanism between two processes ensuring that both processes follow a fair order of execution. It’s simple and effective for solving synchronization issues in two-process scenarios.
+
+### What is Peterson's Algorithm?
+
+- Peterson's Algorithm is a well-known solution for ensuring mutual exclusion in process synchronization. It is designed to manage access to shared resources between two processes in a way that prevents conflicts or data corruption.- It makes sure that only one process can be in the critical section (shared part) at a time.
+- The algorithm uses two variables:
+  - One variable shows if a process wants to enter the critical section.
+  - The other variable shows whose turn it is.
+- If both processes want to enter, the one whose turn it is goes first.
+- It is useful when two programs need to share something safely without interfering with each other.
+
+### Peterson's Algorithm: Parallel Code for Two Processes
+
+Below is a side-by-side comparison of the Peterson's Algorithm code for processes Pi and Pj:
+
+| **Process Pi**                | **Process Pj**                |
+| ----------------------------- | ----------------------------- |
+| ```c                          | ```c                          |
+| do {                          | do {                          |
+| flag[i] = true;               | flag[j] = true;               |
+| turn = j;                     | turn = i;                     |
+| while (flag[j] && turn == j); | while (flag[i] && turn == i); |
+| // critical section           | // critical section           |
+| flag[i] = false;              | flag[j] = false;              |
+| // remainder section          | // remainder section          |
+| } while(true);                | } while(true);                |
+| ```                           | ```                           |
+
+This table shows how both processes use the `flag` and `turn` variables to coordinate entry into the critical section, ensuring mutual exclusion.
