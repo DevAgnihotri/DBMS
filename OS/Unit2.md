@@ -4,6 +4,12 @@
 
 A process is simply a running program. It has its own memory, keeps track of what to do next, and uses resources like files and devices while it runs.
 
+### **What is Context Switch?**
+
+A **context switch** is the process by which an operating system saves the state (context) of a currently running process or thread so that it can resume execution later, and loads the state of another process or thread to start or resume its execution. This allows the CPU to switch between multiple processes, enabling multitasking.
+
+During a context switch, the OS saves information such as the program counter, registers, and memory mappings of the current process, and restores the saved information of the next process to run. Context switching is essential for process scheduling and efficient CPU utilization, but it introduces some overhead due to the time taken to save and restore process states.
+
 #### **States of a Process**
 
 A process typically moves through the following states during its lifetime:
@@ -134,16 +140,16 @@ Below is a side-by-side comparison of the Peterson's Algorithm code for processe
 
 | **Process Pi**                | **Process Pj**                |
 | ----------------------------- | ----------------------------- |
-| ```c                          | ```c                          |
+| } while(true);                | } while(true);                |
+| // critical section           | // critical section           |
+| // remainder section          | // remainder section          |
+| `                             | `                             |
+| `c                            | `c                            |
 | do {                          | do {                          |
+| flag[i] = false;              | flag[j] = false;              |
 | flag[i] = true;               | flag[j] = true;               |
 | turn = j;                     | turn = i;                     |
 | while (flag[j] && turn == j); | while (flag[i] && turn == i); |
-| // critical section           | // critical section           |
-| flag[i] = false;              | flag[j] = false;              |
-| // remainder section          | // remainder section          |
-| } while(true);                | } while(true);                |
-| ```                           | ```                           |
 
 This table shows how both processes use the `flag` and `turn` variables to coordinate entry into the critical section, ensuring mutual exclusion.
 
@@ -171,6 +177,22 @@ This way, Peterson’s Algorithm makes sure only one process is in the critical 
 
 ---
 
+### Mutex vs Semaphore: Definition and Differences
+
+| Feature       | Mutex                                                                      | Semaphore                                                                               |
+| ------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Deadlock Risk | Higher if not used carefully.                                              | Lower, but can cause starvation if not managed well.                                    |
+| Definition    | A lock that allows only one process/thread at a time to access a resource. | A signaling mechanism that controls access to a resource by multiple processes/threads. |
+| Example       | Locking a file so only one thread can write.                               | Counting available slots in a buffer.                                                   |
+| Ownership     | Has ownership; only the thread that locked it can unlock it.               | No ownership; any thread can signal or wait.                                            |
+| Use Case      | Used for mutual exclusion (one at a time).                                 | Used for signaling and controlling access to multiple resources.                        |
+| Value         | Binary (0 or 1)                                                            | Integer (can be >1)                                                                     |
+
+**In simple terms:**
+
+- Use a **mutex** when only one thread should access something at a time.
+- Use a **semaphore** when you want to allow a certain number of threads to access a resource.
+
 ## Semaphores
 
 Operating System Solution Using Semaphores
@@ -191,12 +213,12 @@ Operating System Solution Using Semaphores
 
 | **wait(S)**                  | **signal(S)** |
 | ---------------------------- | ------------- |
-| ```c                         | ```c          |
 | {                            | {             |
-| while (S <= 0); // Busy wait | S++;          |
-| S--;                         | }             |
 | }                            | ```           |
-| ```                          |               |
+| ```                          |
+| `c                           | `c            |
+| S--;                         | }             |
+| while (S <= 0); // Busy wait | S++;          |
 
 ### How Semaphores Work
 
@@ -256,19 +278,19 @@ Here is the OCR (extracted) text from the image:
 
 | **Producer()**        | **Consumer()**           |
 | --------------------- | ------------------------ |
-| ```c                  | ```c                     |
 | {                     | {                        |
-| while(T)              | while(T)                 |
 | {                     | {                        |
+| }                     | }                        |
+| }                     | }                        |
+| // Add item to buffer | signal(S);               |
 | // Produce an item    | wait(F); // Underflow    |
+| `                     | `                        |
+| `c                    | `c                       |
+| signal(F);            | // Consume item          |
+| signal(S);            | signal(E);               |
 | wait(E); // Overflow  | wait(S);                 |
 | wait(S);              | // Pick item from buffer |
-| // Add item to buffer | signal(S);               |
-| signal(S);            | signal(E);               |
-| signal(F);            | // Consume item          |
-| }                     | }                        |
-| }                     | }                        |
-| ```                   | ```                      |
+| while(T)              | while(T)                 |
 
 ---
 
@@ -369,10 +391,10 @@ To treat **deadlock** in the **Dining Philosophers Problem** using **semaphores*
 
 | Method           | Core Idea        | Prevents Deadlock by   |
 | ---------------- | ---------------- | ---------------------- |
-| N–1 Philosophers | Limit access     | Avoiding full lock     |
-| Atomic Fork Pick | All or none      | No partial holding     |
 | Asymmetry        | Fork order       | Breaking circular wait |
+| Atomic Fork Pick | All or none      | No partial holding     |
 | Global Semaphore | Critical section | Controlled entry       |
+| N–1 Philosophers | Limit access     | Avoiding full lock     |
 | State Monitoring | Track status     | Conditional eating     |
 
 ## Sleeping Barber Problem in Process Synchronization
