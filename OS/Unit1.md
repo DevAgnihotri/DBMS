@@ -1,36 +1,49 @@
-# Operating System (OS) Overview
+# What is an Operating System (OS)?
 
-The Operating System (OS) acts as an intermediary between the user and the hardware.
+An **Operating System (OS)** is the main software that manages all the hardware and other software on a computer. It acts as a bridge between the user, system applications, and the computer hardware. The OS makes sure everything works together smoothly, allowing us to run programs, save files, and use devices like printers and keyboards.
 
-## **Structure of Operating System**
+## Structure of Operating System
 
-- A common approach is to partition the task into small components, or modules, rather than have one monolithic system. Each of these modules should be a well-defined portion of the system, with carefully defined inputs, outputs, and functions.
+The structure of an OS refers to how its different parts are organized and how they interact. There are several ways to design an OS, but here are two common structures explained simply:
+
+### 1. Simple Structure
+
+A **simple structure** OS is built as one large program where all the basic functions (like process management, memory management, and file handling) are mixed together. There is little separation between different parts, making it easy to build but harder to maintain or update.
+
+- Early versions of **MS-DOS** used a simple structure.
+- All the code for handling files, devices, and user commands was combined into one large program.
+- There was little separation between different functions.
+- Changing one part of the system could easily affect other parts, making maintenance difficult.
+- This design made the OS easy to build initially but hard to update or expand later.
+
+**Analogy:**  
+Think of a simple structure like a one-room house where everything (kitchen, bedroom, living room) is in the same space. It’s easy to build, but if you want to change the kitchen, you might disturb the bedroom!
+
+---
+
+### 2. Layered Structure
+
+A **layered structure** OS is organized into layers, each built on top of the one below it. Each layer has a specific job and only interacts with the layers directly above or below it. This makes the OS easier to understand, test, and update.
+
+- The **UNIX operating system** uses a layered approach:
+   - The **lowest layer** interacts directly with the hardware.
+   - The **middle layer** manages basic OS functions such as process and memory management.
+   - The **top layer** provides user services and interfaces, like the shell and system utilities.
+- This separation into layers makes UNIX easier to maintain, update, and understand.
+- Each layer only interacts with the layers directly above and below it, improving system reliability and modularity.
+- Example: If you update a user service, you usually don't need to change the hardware interaction layer.
+
+**Analogy:**  
+Imagine a layered structure like a multi-story building. Each floor has a different purpose (parking, offices, apartments), and you can work on one floor without affecting the others.
 
 ---
 
-### **Simple Structure**
+**Summary Table:**
 
-- Many operating systems do not have well-defined structures. Frequently, such systems started as small, simple, and limited systems and then grew beyond their original scope.
-
-- MS-DOS is an example of such a system.
-
-- Not divided into modules. Its interface, levels and functionality are not well separated.
-
-### **Layered Approach**
-
-With proper hardware support, operating systems can be broken into pieces. The operating system can then retain much greater control over the computer and over the applications that make use of that computer.
-
-1. Implementers have more freedom in changing the inner workings of the system and in creating modular operating systems.
-
-2. Under a top-down approach, the overall functionality and features are determined and are separated into components.
-
-3. Information hiding is also important, because it leaves programmers free to implement the low-level routines as they see fit.
-
-4. A system can be made modular in many ways. One method is the layered approach, in which the operating system is broken into a number of layers (levels). The bottom layer (layer 0) is the hardware; the highest (layer _N_) is the user interface.
-
-![Layered Approach](https://miro.medium.com/v2/resize:fit:1040/1*dGC4LbUB7I00LHgpYlyhVA.png)
-
----
+| Structure         | Description                                     | Example | Analogy              |
+| ----------------- | ----------------------------------------------- | ------- | -------------------- |
+| Simple Structure  | All functions mixed together in one big program | MS-DOS  | One-room house       |
+| Layered Structure | Organized in layers, each with a specific job   | UNIX    | Multi-story building |
 
 ## OS Services
 
