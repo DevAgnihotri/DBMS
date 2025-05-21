@@ -276,9 +276,9 @@ Certainly! Let's delve into the various types of operating systems in a detailed
 
 ---
 
-## Spooling
+### Spooling
 
-### Simultaneous Peripheral Operations Online
+#### Simultaneous Peripheral Operations Online
 
 1. In a computer system, input-output devices such as printers are very slow relative to the performance of the rest of the system.
 
@@ -290,7 +290,7 @@ Certainly! Let's delve into the various types of operating systems in a detailed
 
 ---
 
-### 8. Multiprogramming Operating System
+### 2. Multiprogramming Operating System
 
 **Definition:** Multiprogramming operating systems allow multiple programs to reside in memory simultaneously, managing their execution to optimize CPU usage.
 
@@ -308,7 +308,7 @@ Certainly! Let's delve into the various types of operating systems in a detailed
 
 ---
 
-### 2. Time-Sharing Operating System
+### 3. Time-Sharing Operating System
 
 **Definition:** Time-sharing operating systems allow multiple users to use a computer system simultaneously by rapidly switching between tasks, giving the impression that each user has their own dedicated system.
 
@@ -335,15 +335,13 @@ Certainly! Let's delve into the various types of operating systems in a detailed
 
 ---
 
-### Multiprocessing Operating System / tightly coupled system
+### 4. Multiprocessing Operating System / tightly coupled system
 
 1. **Multiprocessor Operating System** refers to the use of two or more central processing units (CPU) within a single computer system. These multiple CPU's share system bus, **memory and other peripheral devices**.
 
 2. Multiple concurrent processes each can run on a separate CPU, here we achieve a true parallel execution of processes.
 
 3. Becomes most important in computer system, where the complexity of the job is more, and CPU divides and conquers the jobs. Generally used in the fields like artificial intelligence and expert system, image processing, weather forecasting etc.
-
-Here is the OCR result from the image:
 
 ---
 
