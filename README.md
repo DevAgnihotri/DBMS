@@ -1,7 +1,3 @@
-Certainly! Here’s a README.md draft for your DBMS Notes repository:
-
----
-
 # DBMS Notes
 
 Welcome to the **DBMS Notes** repository! This repo is a curated collection of notes, explanations, and resources related to Database Management Systems (DBMS). It is intended to help students and professionals quickly understand and revise core DBMS concepts.
